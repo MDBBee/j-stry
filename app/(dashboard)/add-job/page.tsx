@@ -1,6 +1,7 @@
-import CreateJobForm from '@/components/add-job/CreateJobForm';
 
-const AddJobPage = () => {
+import CreateJobForm from "@/components/add-job/CreateJobForm";
+
+const AddJobPage = async () => {
   return (
     <>
       <CreateJobForm />

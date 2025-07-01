@@ -1,28 +1,28 @@
-'use client';
-import { Control } from 'react-hook-form';
+"use client";
+import { Control } from "react-hook-form";
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from '../ui/form';
-import { Input } from '../ui/input';
+} from "../ui/form";
+import { Input } from "../ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '../ui/select';
-import { Textarea } from '../ui/textarea';
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-import { Button } from '../ui/button';
-import { CalendarIcon } from 'lucide-react';
-import { Calendar } from '../ui/calendar';
-import { cn } from '@/lib/utils';
-import { format } from 'date-fns';
-
+} from "../ui/select";
+import { Textarea } from "../ui/textarea";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Button } from "../ui/button";
+import { CalendarIcon } from "lucide-react";
+import { Calendar } from "../ui/calendar";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 type CustomFormFieldProps = {
   name: string;
   control: Control<any>;
@@ -140,14 +140,14 @@ export function CustomDate({
             <PopoverTrigger asChild>
               <FormControl>
                 <Button
-                  variant={'outline'}
+                  variant={"outline"}
                   className={cn(
-                    'w-[240px] pl-3 text-left font-normal',
-                    !field.value && 'text-muted-foreground'
+                    "w-[240px] pl-3 text-left font-normal",
+                    !field.value && "text-muted-foreground"
                   )}
                 >
                   {field.value ? (
-                    format(field.value, 'PPP')
+                    format(field.value, "PPP")
                   ) : (
                     <span>Pick the application due date</span>
                   )}

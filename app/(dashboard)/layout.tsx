@@ -1,5 +1,5 @@
-import Navbar from '@/components/shared/Navbar';
-import Sidebar from '@/components/shared/Sidebar';
+import Navbar from "@/components/shared/Navbar";
+import Sidebar from "@/components/shared/Sidebar";
 
 export default function DashBoardLayout({
   children,
@@ -7,7 +7,7 @@ export default function DashBoardLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <main className="wrapper grid lg:grid-cols-5">
+    <main className="px-4 grid lg:grid-cols-5">
       {/* NavBar */}
       {/* Sidebar- hide on small screen */}
       <div className="hidden lg:block lg:col-span-1 lg:min-h-screen">

@@ -1,46 +1,47 @@
-'use client';
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { Button } from '@/components/ui/button';
-import { Form } from '@/components/ui/form';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { Button } from "@/components/ui/button";
+import { Form } from "@/components/ui/form";
 import {
   createAndEditJobSchema,
   CreateAndEditJobType,
   JobMode,
   JobStatus,
-} from '@/utils/types';
+} from "@/utils/types";
 import {
   CustomDate,
   CustomFormField,
   CustomFormSelect,
   CustomTextArea,
-} from './FormComponents';
+} from "./FormComponents";
+import { createJobAction } from "@/actions/jobs";
+import { CREATEJOBCONSTANT } from "@/lib/constants";
+import { toast } from "sonner";
 
 function CreateJobForm() {
-  // ...
-
   const form = useForm<CreateAndEditJobType>({
     resolver: zodResolver(createAndEditJobSchema),
     defaultValues: {
-      position: '',
-      company: '',
-      location: '',
-      status: JobStatus.Pending,
-      mode: JobMode.FullTime,
-      description: '',
-      requirements: '',
-      dueDate: new Date(),
+      ...CREATEJOBCONSTANT,
     },
   });
 
-  // 2. Define a submit handler.
-  function onSubmit(values: CreateAndEditJobType) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log('FORM SUBMITTED');
+  async function onSubmit(values: CreateAndEditJobType) {
+    const res = await createJobAction(values);
 
-    console.log(values);
+    if (res.success) {
+      toast("Event has been created", {
+        description: "Sunday, December 03, 2023 at 9:00 AM",
+        action: {
+          label: "Undo",
+          onClick: () => console.log("Undo"),
+        },
+      });
+    } else {
+      toast.error(res.message);
+    }
   }
 
   return (
@@ -52,15 +53,12 @@ function CreateJobForm() {
         </h2>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 items-start space-y-8">
           <CustomFormField control={form.control} name="company" />
-          {/* <div className="flex justify-between items-center"> */}
           {/* Position */}
           <CustomFormField control={form.control} name="position" />
           {/* Location */}
           <CustomFormField control={form.control} name="location" />
           {/* Due date */}
           <CustomDate control={form.control} name="dueDate" />
-          {/* </div> */}
-          {/* <div className="flex justify-between items-center"> */}
           {/* Job Status */}
           <CustomFormSelect
             control={form.control}
@@ -75,7 +73,6 @@ function CreateJobForm() {
             items={[JobMode.FullTime, JobMode.PartTime, JobMode.Internship]}
             labelText="Job Type"
           />
-          {/* </div> */}
           {/* Description */}
           <CustomTextArea
             LabelText="Job Description"
@@ -89,7 +86,9 @@ function CreateJobForm() {
             name="requirements"
           />
 
-          <Button type="submit">Submit</Button>
+          <Button type="submit" className="col-span-full">
+            Submit
+          </Button>
         </div>
       </form>
     </Form>
