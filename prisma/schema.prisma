@@ -28,6 +28,6 @@ model Job {
   description  String
   requirements String?
   dueDate      DateTime @default(now())
-  User         User?    @relation(fields: [clerkId], references: [id])
+  User         User?    @relation(fields: [clerkId], references: [clerkId])
   clerkId       String
 }

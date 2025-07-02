@@ -16,9 +16,12 @@ import {
   CustomFormSelect,
   CustomTextArea,
 } from "./FormComponents";
-import { createJobAction } from "@/actions/jobs";
+import { createJobAction } from "@/utils/actions/jobs";
 import { CREATEJOBCONSTANT } from "@/lib/constants";
+// import { toast } from "sonner";
+import { redirect } from "next/navigation";
 import { toast } from "sonner";
+import { Loader } from "lucide-react";
 
 function CreateJobForm() {
   const form = useForm<CreateAndEditJobType>({
@@ -32,11 +35,11 @@ function CreateJobForm() {
     const res = await createJobAction(values);
 
     if (res.success) {
-      toast("Event has been created", {
-        description: "Sunday, December 03, 2023 at 9:00 AM",
+      toast("Job Entry Created Successfully!", {
+        description: "View your job in the dashboard.",
         action: {
-          label: "Undo",
-          onClick: () => console.log("Undo"),
+          label: "View Jobs",
+          onClick: () => redirect("/"),
         },
       });
     } else {
@@ -63,14 +66,14 @@ function CreateJobForm() {
           <CustomFormSelect
             control={form.control}
             name="status"
-            items={[JobStatus.Pending, JobStatus.Interview, JobStatus.Declined]}
+            items={[...Object.values(JobStatus)]}
             labelText="Job Status"
           />
           {/* Job Mode */}
           <CustomFormSelect
             control={form.control}
             name="mode"
-            items={[JobMode.FullTime, JobMode.PartTime, JobMode.Internship]}
+            items={[...Object.values(JobMode)]}
             labelText="Job Type"
           />
           {/* Description */}
@@ -86,8 +89,18 @@ function CreateJobForm() {
             name="requirements"
           />
 
-          <Button type="submit" className="col-span-full">
-            Submit
+          <Button
+            disabled={form.formState.isSubmitting}
+            type="submit"
+            className="col-span-full text-lg disabled:bg-green-800"
+          >
+            {form.formState.isSubmitting ? (
+              <span className="flex items-center gap-2 ">
+                <Loader className="animate-spin" /> Creating Job...{" "}
+              </span>
+            ) : (
+              "Create Job"
+            )}
           </Button>
         </div>
       </form>
