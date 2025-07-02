@@ -58,3 +58,14 @@ export type GetAllJobsActionTypes = {
   page?: number;
   limit?: number;
 };
+
+export type JOBCONSTANT = {
+  position: string;
+  company: string;
+  location: string;
+  status: JobStatus;
+  mode: JobMode;
+  description: string;
+  requirements: string;
+  dueDate: Date;
+};

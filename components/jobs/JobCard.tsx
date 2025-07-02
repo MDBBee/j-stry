@@ -46,7 +46,10 @@ const JobCard = ({ job }: { job: JobType }) => {
         </Link>
       </CardContent>
       <CardFooter className="flex gap-4 items-center justify-between">
-        <Button asChild size="sm">
+        <Button
+          asChild
+          className="hover:border-chart-2 border-2 hover:bg-muted hover:text-muted-foreground"
+        >
           <Link href={`/jobs/${job.id}`}>edit</Link>
         </Button>
         <DeleteJobBtn id={job.id} />

@@ -144,3 +144,52 @@ export async function deleteJobAction(jobId: string): Promise<{
     };
   }
 }
+
+// Get a single job action
+export async function getSingleJobAction(
+  jobId: string
+): Promise<JobType | null> {
+  const userId = await authenticateAndRedirect();
+  try {
+    const job = await db.job.findUnique({
+      where: { id: jobId, clerkId: userId },
+    });
+    return job;
+  } catch (error) {
+    console.error("Error fetching job:", error);
+    return null;
+  }
+}
+
+// Edit a job action
+export async function editJobAction(
+  jobId: string,
+  values: CreateAndEditJobType
+): Promise<{ success: boolean; message: string }> {
+  const userId = await authenticateAndRedirect();
+  try {
+    createAndEditJobSchema.parse(values);
+    const job = await db.job.findUnique({
+      where: { id: jobId, clerkId: userId },
+    });
+
+    if (!job) {
+      throw new Error(
+        "Job not found or you do not have permission to edit this job."
+      );
+    }
+
+    await db.job.update({
+      where: { id: jobId },
+      data: { ...values, clerkId: userId },
+    });
+    // revalidatePath("/jobs");
+    return { success: true, message: "Job entry updated successfully!" };
+  } catch (error) {
+    console.error("Error updating job:", error);
+    return {
+      success: false,
+      message: formatError(error) || "Something went wrong EDIT_JOB_ACTION",
+    };
+  }
+}

@@ -11,7 +11,7 @@ const DeleteJobBtn = ({ id }: { id: string }) => {
     <Button
       asChild
       disabled={isSubmitting}
-      className="hover:border-red-500 border-2 cursor-pointer"
+      className="hover:border-red-500 border-2 cursor-pointer hover:text-red-500 hover:bg-muted"
     >
       <button
         onClick={() => {
