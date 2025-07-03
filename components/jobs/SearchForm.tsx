@@ -26,7 +26,7 @@ const SearchForm = () => {
 
   // Reset form when both params are cleared from the clear-search button
   useEffect(() => {
-    if (!search && (!jobStatus || jobStatus === "all")) {
+    if (search === "" && jobStatus === "all") {
       formRef.current?.reset();
     }
   }, [search, jobStatus]);
@@ -56,14 +56,15 @@ const SearchForm = () => {
         name="search"
         defaultValue={search}
       />
+      {/* Use Regular HTML5 select component to fix the form reset issue*/}
       <Select name="jobStatus" defaultValue={jobStatus}>
         <SelectTrigger className="w-full">
           <SelectValue placeholder="Select Job Status" />
         </SelectTrigger>
-        <SelectContent>
-          {["all", ...Object.values(JobStatus)].map((jobStatus) => (
-            <SelectItem key={jobStatus} value={jobStatus}>
-              {jobStatus}
+        <SelectContent defaultValue={jobStatus}>
+          {["all", ...Object.values(JobStatus)].map((jb) => (
+            <SelectItem key={jb} value={jb}>
+              {jb}
             </SelectItem>
           ))}
         </SelectContent>

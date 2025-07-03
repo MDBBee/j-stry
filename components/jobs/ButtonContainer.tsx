@@ -43,7 +43,7 @@ const ButtonContainer = ({
   const pagesArray = Array.from({ length: totalPages }, (_, i) => i + 1);
   const curPage = Number(page);
   return (
-    <div className="space-x-1 flex items-center">
+    <div className="space-x-1 flex items-center ">
       {/* Prev */}
       <Button
         key={"prev"}
@@ -62,7 +62,7 @@ const ButtonContainer = ({
         Prev
       </Button>
       {/* Center buttons */}
-      <div className="w-60 text-center">
+      <div className="p-2 space-x-1 text-center">
         {pagesArray.map((p) => {
           const active = p === curPage;
           return addPageButton(p, active);
