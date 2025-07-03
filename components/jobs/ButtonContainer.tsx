@@ -2,6 +2,7 @@
 import React from "react";
 import { Button } from "../ui/button";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const ButtonContainer = ({
   page,
@@ -22,24 +23,68 @@ const ButtonContainer = ({
     };
     const urlObjectParams = new URLSearchParams(urlObject);
     router.push(`${pathName}?${urlObjectParams.toString()}`);
-    // console.log(`${pathName}?${urlObjectParams.toString()}`);
   };
 
+  const addPageButton = (page: number, activeClass: boolean) => {
+    return (
+      <Button
+        key={page}
+        variant={activeClass ? "default" : "outline"}
+        className="cursor-pointer w-5"
+        onClick={() => {
+          handlePageClick(Number(page));
+        }}
+      >
+        {page}
+      </Button>
+    );
+  };
+
+  const pagesArray = Array.from({ length: totalPages }, (_, i) => i + 1);
+  const curPage = Number(page);
   return (
-    <div className="space-x-1">
-      {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => {
-        return (
-          <Button
-            key={p}
-            size="icon"
-            variant={+page === p ? "default" : "outline"}
-            className="cursor-pointer"
-            onClick={() => handlePageClick(p)}
-          >
-            {p}
-          </Button>
-        );
-      })}
+    <div className="space-x-1 flex items-center">
+      {/* Prev */}
+      <Button
+        key={"prev"}
+        size="lg"
+        variant="outline"
+        className="cursor-pointer"
+        onClick={() => {
+          let prev = curPage - 1;
+          if (prev < 1) prev = totalPages;
+          handlePageClick(prev);
+        }}
+      >
+        <span>
+          <ChevronLeft />
+        </span>
+        Prev
+      </Button>
+      {/* Center buttons */}
+      <div className="w-60 text-center">
+        {pagesArray.map((p) => {
+          const active = p === curPage;
+          return addPageButton(p, active);
+        })}
+      </div>
+      {/* Next */}
+      <Button
+        key={"next"}
+        size="lg"
+        variant="outline"
+        className="cursor-pointer"
+        onClick={() => {
+          let next = curPage + 1;
+          if (next > totalPages) next = 1;
+          handlePageClick(next);
+        }}
+      >
+        Next
+        <span>
+          <ChevronRight />
+        </span>
+      </Button>
     </div>
   );
 };

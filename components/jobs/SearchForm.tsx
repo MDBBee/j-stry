@@ -11,14 +11,25 @@ import {
   SelectContent,
 } from "../ui/select";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { Search } from "lucide-react";
+import { useEffect, useRef } from "react";
 
 const SearchForm = () => {
   const router = useRouter();
   const pathName = usePathname();
-
   const searchParams = useSearchParams();
+  const formRef = useRef<HTMLFormElement>(null);
+
   const search = searchParams.get("search") || "";
   const jobStatus = searchParams.get("jobStatus") || "all";
+
+  // Reset form when both params are cleared from the clear-search button
+  useEffect(() => {
+    if (!search && (!jobStatus || jobStatus === "all")) {
+      formRef.current?.reset();
+    }
+  }, [search, jobStatus]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -35,6 +46,7 @@ const SearchForm = () => {
 
   return (
     <form
+      ref={formRef}
       className="border-2 mb-16 p-8 grid sm:grid-cols-2 md:grid-cols-3  gap-4 rounded-lg"
       onSubmit={handleSubmit}
     >
@@ -56,7 +68,16 @@ const SearchForm = () => {
           ))}
         </SelectContent>
       </Select>
-      <Button type="submit">Search </Button>
+      <div className="flex gap-2">
+        <Button type="submit">
+          {" "}
+          <Search />
+          Search{" "}
+        </Button>
+        <Button variant="outline" asChild>
+          <Link href="/jobs">Clear Search</Link>
+        </Button>
+      </div>
     </form>
   );
 };
