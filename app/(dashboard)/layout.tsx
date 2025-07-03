@@ -15,7 +15,7 @@ export default function DashBoardLayout({
       </div>
       <div className="lg:col-span-4">
         <Navbar />
-        <div className="py-16 px-4 sm:px-8 lg:px-16 ">{children}</div>
+        <div className="py-8 px-4 sm:px-8 lg:px-16 ">{children}</div>
       </div>
     </main>
   );

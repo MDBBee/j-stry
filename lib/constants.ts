@@ -10,3 +10,5 @@ export const CREATEJOBCONSTANT = {
   requirements: "MERN stack plus fast-api",
   dueDate: new Date(new Date().getTime() + 1000 * 60 * 60 * 24),
 };
+
+export const PAGE_LIMIT = 10;

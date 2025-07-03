@@ -12,6 +12,7 @@ import { Prisma } from "@prisma/client";
 import { formatError } from "@/lib/utils";
 import { revalidatePath } from "next/cache";
 import dayjs from "dayjs";
+import { PAGE_LIMIT } from "@/lib/constants";
 
 // import { Prisma } from "@prisma/client";
 
@@ -74,7 +75,7 @@ export async function getAllJobsAction({
   search,
   jobStatus,
   page = 1,
-  limit = 10,
+  limit = PAGE_LIMIT,
 }: GetAllJobsActionTypes): Promise<{
   jobs: JobType[];
   count: number;
@@ -97,9 +98,10 @@ export async function getAllJobsAction({
         ],
       };
     }
-    if (jobStatus && jobStatus !== "All") {
+    if (jobStatus && jobStatus !== "all") {
       whereClause = { ...whereClause, status: jobStatus };
     }
+    // console.log("WHERE: ", JSON.stringify(whereClause, null, 2));
 
     const jobs = await db.job.findMany({
       where: whereClause,
@@ -108,7 +110,10 @@ export async function getAllJobsAction({
       take: limit,
     });
 
-    return { jobs, count: 0, page: 1, totalPages: 1 };
+    const count = await db.job.count({ where: whereClause });
+    const totalPages = Math.ceil(count / limit);
+
+    return { jobs, count, page, totalPages };
   } catch (error) {
     console.log("Error fetching jobs:", error);
     const formerr = formatError(error);

@@ -5,15 +5,15 @@ import { getAllJobsAction } from "@/utils/actions/jobs";
 const JobsPage = async ({
   searchParams,
 }: {
-  searchParams: Promise<{ search: string; jobStatus: string }>;
+  searchParams: Promise<{ search: string; jobStatus: string; page: number }>;
 }) => {
-  const { search, jobStatus } = await searchParams;
-  const allJobs = await getAllJobsAction({ search, jobStatus });
+  const { search, jobStatus, page } = await searchParams;
+  const response = await getAllJobsAction({ search, jobStatus, page });
 
   return (
     <>
       <SearchForm />
-      <JobsList allJobs={allJobs.jobs} />
+      <JobsList allJobs={response} />
     </>
   );
 };
