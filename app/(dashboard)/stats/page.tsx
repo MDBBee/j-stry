@@ -19,10 +19,10 @@ const StatsPage = async () => {
   }
 
   return (
-    <>
+    <div className="space-y-14">
       <StatsContainer data={statsData} />
       <ChartContainer data={chartData} />
-    </>
+    </div>
   );
 };
 export default StatsPage;

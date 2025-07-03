@@ -27,7 +27,7 @@ const StatsLoadingPage = () => {
           </Card>
         </div>
       </div>
-      <Skeleton className="h-[55vh] w-full mt-4" />
+      <Skeleton className="h-[30vh] w-full mt-8" />
     </>
   );
 };
