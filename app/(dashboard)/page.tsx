@@ -19,6 +19,9 @@ const PublicPage = () => {
           className="h-[350px]"
         />
       </div>
+      <div>
+        <ImageSlide />
+      </div>
       <div className="mt-16 flex justify-around">
         <Button
           variant="outline"
@@ -32,9 +35,6 @@ const PublicPage = () => {
         >
           Try (Out)
         </Button>
-      </div>
-      <div>
-        <ImageSlide />
       </div>
     </div>
   );
