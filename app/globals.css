@@ -1,5 +1,5 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
+@import "tailwindcss";
+@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -17,6 +17,15 @@
 
   .flex-between {
     @apply flex justify-between items-center;
+  }
+  .ld-shadow {
+    box-shadow: 0px 10px 0 #1d293d;
+  }
+  .ld-shadow:hover {
+    box-shadow: 0px 7px 0 #1d293d;
+  }
+  .ld-shadow:active {
+    box-shadow: 0px 5px 0 #1d293d;
   }
 }
 
